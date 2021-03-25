@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <div class="well">
+      <h2>Enter a zipcode:</h2>
+      <input class="form-control" placeholder="Zipcode" type="number" [(ngModel)]="zipcodeCandidate"/>
+      <br>
+      <button class="btn btn-primary" (click)="AddZipcodeCommand()">Add location</button>
+    </div>
+    <div >
+        <div class="well flex" *ngFor="let w of weathers; index as zipcode">
+            <div>
+              <h3>{{w.name}}</h3>
+              <h4>Current conditions: {{w.weather[0].main}}</h4>
+              <h4>Temperatures today:</h4>
+              <p>
+                Current {{w.main.temp}}
+                - Max {{w.main.temp_max}}
+                - Min {{w.main.temp_min}}
+              </p>
+              <p>
+                <a [routerLink]="['forecast', zipcode]">Show 5-day forecast for {{w.name}}</a>
+              </p>
+            </div>
+            <div>
+              <span class="close" (click)="RemoveZipcodeCommand(zipcode)">×</span>
+              <img [src]="w.weather[0].main | weatherIcon">
+            </div>
+        </div>
+    </div>    
+</div>
