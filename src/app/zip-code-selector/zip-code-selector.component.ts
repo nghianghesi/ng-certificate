@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherService } from '../weather.service';
-import { ZipcodeChangeEvent, ZipCodesService } from '../zip-codes.service';
+import { WeatherService } from '../services/weather.service';
+import { ZipcodeChangeEvent, ZipCodesService } from '../services/zip-codes.service';
 
 @Component({
   selector: 'zip-code-selector',
@@ -8,8 +8,8 @@ import { ZipcodeChangeEvent, ZipCodesService } from '../zip-codes.service';
   styleUrls: ['./zip-code-selector.component.css']
 })
 export class ZipCodeSelectorComponent implements OnInit {
-  private weathers : object[] = [];
-  private zipcodeCandidate : number | '' = 0;
+  weathers : any[] = [];
+  zipcodeCandidate : number | '' = 0;
   constructor(
     private zipCodesService: ZipCodesService, 
     private weatherService : WeatherService) 

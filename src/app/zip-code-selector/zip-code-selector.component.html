@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="well">
       <h2>Enter a zipcode:</h2>
-      <input class="form-control" placeholder="Zipcode" type="number" [(ngModel)]="zipcodeCandidate"/>
+      <input class="form-control" placeholder="Zipcode" type="number" name="zipcodeCandidate" [(ngModel)]="zipcodeCandidate"/>
       <br>
       <button class="btn btn-primary" (click)="AddZipcodeCommand()">Add location</button>
     </div>
@@ -12,9 +12,9 @@
               <h4>Current conditions: {{w.weather[0].main}}</h4>
               <h4>Temperatures today:</h4>
               <p>
-                Current {{w.main.temp}}
-                - Max {{w.main.temp_max}}
-                - Min {{w.main.temp_min}}
+                Current {{w.main.temp | temperature : 'F'}}
+                - Max {{w.main.temp_max | temperature : 'F'}}
+                - Min {{w.main.temp_min | temperature : 'F'}}
               </p>
               <p>
                 <a [routerLink]="['forecast', zipcode]">Show 5-day forecast for {{w.name}}</a>

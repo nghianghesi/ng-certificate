@@ -12,10 +12,9 @@ export class ZipCodesService {
   onChange = new EventEmitter<ZipcodeChangeEvent>();
   private zipcodes : number[] = [];
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService)
+  constructor()
   { 
-     this.zipcodes = JSON.parse(this.storage.get(ZipCodesService.ZIPCODE_STORAGE_KEY)) || [];
-
+     this.zipcodes = JSON.parse(localStorage.get(ZipCodesService.ZIPCODE_STORAGE_KEY)) || [];
   }
 
   public GetZipcodes() : Readonly<number[]>
@@ -28,7 +27,7 @@ export class ZipCodesService {
     if (this.zipcodes.indexOf(zipcode) < 0)
     {
       this.zipcodes.push(zipcode);
-      this.storage.set(ZipCodesService.ZIPCODE_STORAGE_KEY, JSON.stringify(this.zipcodes));
+      localStorage.set(ZipCodesService.ZIPCODE_STORAGE_KEY, JSON.stringify(this.zipcodes));
       this.onChange.emit({zipcode: zipcode, action:'Added'});
     }
   }  
@@ -38,7 +37,7 @@ export class ZipCodesService {
     if (this.zipcodes.indexOf(zipcode) < 0)
     {
       this.zipcodes.push(zipcode);
-      this.storage.set(ZipCodesService.ZIPCODE_STORAGE_KEY, JSON.stringify(this.zipcodes));
+      localStorage.set(ZipCodesService.ZIPCODE_STORAGE_KEY, JSON.stringify(this.zipcodes));
       this.onChange.emit({zipcode: zipcode, action:'Removed'});
     }
   }
