@@ -6,7 +6,7 @@ import { WeatherInfomation } from '../services/weather.service';
 })
 
 export class SortWeatherZipcodesPipe implements PipeTransform {
-  transform(value: unknown, ...args: unknown[]): unknown {
+  transform(value: {key:string, value:WeatherInfomation}[], ...args: unknown[]): {key:string, value:WeatherInfomation}[] {
     return (value as any[]).sort((a,b) => a.value.name?.localeCompare(b.value.name || '') || -1);
   }
 }
