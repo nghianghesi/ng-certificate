@@ -35,7 +35,7 @@ export class ZipCodeSelectorComponent implements OnInit {
   RemoveZipcodeCommand(zipcode: string)
   {
     if (this.weathers[zipcode]){
-      this.zipCodesService.AddZipcode(zipcode);
+      this.zipCodesService.RemoveZipcode(zipcode);
     }
   }
 
@@ -48,6 +48,7 @@ export class ZipCodeSelectorComponent implements OnInit {
     else if (evt.action == 'Removed')
     {      
       delete this.weathers[evt.zipcode];
+      delete this.tracking[evt.zipcode];
     }
   }
 

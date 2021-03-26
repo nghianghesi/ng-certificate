@@ -16,6 +16,7 @@ import { TemperaturePipe } from './pipes/temperature.pipe';
 import { WeatherService } from './services/weather.service';
 import { ZipCodesService } from './services/zip-codes.service';
 import { AppConfigService } from './services/app-config.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AppConfigService } from './services/app-config.service';
     BrowserAnimationsModule,
     FormsModule,
     StorageServiceModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [AppConfigService, WeatherService, ZipCodesService],
   bootstrap: [AppComponent]

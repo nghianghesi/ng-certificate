@@ -20,7 +20,6 @@ export class ZipCodesService {
     catch(e) {
       this.zipcodes = {};
     }
-    this.zipcodes = {};
   }
 
   public GetZipcodes() : Readonly<string[]>

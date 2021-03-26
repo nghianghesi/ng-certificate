@@ -4,8 +4,8 @@ import { ZipCodeSelectorComponent } from './zip-code-selector/zip-code-selector.
 import { ZipCodeWeatherComponent } from './zip-code-weather/zip-code-weather.component';
 
 const routes: Routes = [
-  { path: 'forcast/:zipcode', component: ZipCodeWeatherComponent },
-  { path: 'forcast', component: ZipCodeSelectorComponent },
+  { path: 'forecast/:zipcode', component: ZipCodeWeatherComponent },
+  { path: 'forecast', component: ZipCodeSelectorComponent },
   { path: '', component: ZipCodeSelectorComponent }
 ];
 

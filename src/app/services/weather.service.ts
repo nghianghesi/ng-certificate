@@ -26,8 +26,7 @@ export class WeatherService {
     if (zipcode > '')
     {
       let url : string = `${this.config.BaseEndpoint}/forecast/daily`;
-      return this.http.get<WeatherInfomation>(url, {params:{zip:zipcode.toString(), appid:this.config.ApiKey}})
-            .pipe(take(5), map((x)=>{x.zipcode = zipcode; return x;}));
+      return this.http.get<WeatherForecastInformation>(url, {params:{zip:zipcode.toString(), appid:this.config.ApiKey}});
     }
 
     return null;
@@ -75,6 +74,57 @@ export interface WeatherInfomation
   "timezone"?: number,
   "id"?: number,
   "name"?: string,
-  "zipcode"?:string,
   "cod"?: number
-  }    
+  }
+
+export interface WeatherForecastInformation{
+  "city": {
+    "id": number,
+    "name": string,
+    "coord": {
+      "lon": number,
+      "lat": number
+    },
+    "country": string,
+    "population": number,
+    "timezone": number
+  },
+  "cod": string,
+  "message": number,
+  "cnt": number,
+  list : [
+    {
+      "dt": number,
+      "sunrise": number,
+      "sunset": number,
+      "temp": {
+        "day": number,
+        "min": number,
+        "max": number,
+        "night": number,
+        "eve": number,
+        "morn": number
+      },
+      "feels_like": {
+        "day": number,
+        "night": number,
+        "eve": number,
+        "morn": number
+      },
+      "pressure": number,
+      "humidity": number,
+      "weather": [
+        {
+          "id": number,
+          "main": string,
+          "description": string,
+          "icon": string
+        }
+      ],
+      "speed": number,
+      "deg": number,
+      "clouds": number,
+      "pop": number
+    }
+  ]
+}
