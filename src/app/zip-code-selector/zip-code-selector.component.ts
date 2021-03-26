@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherService } from '../services/weather.service';
+import { WeatherInfomation, WeatherService } from '../services/weather.service';
 import { ZipcodeChangeEvent, ZipCodesService } from '../services/zip-codes.service';
 
 @Component({
@@ -8,13 +8,14 @@ import { ZipcodeChangeEvent, ZipCodesService } from '../services/zip-codes.servi
   styleUrls: ['./zip-code-selector.component.css']
 })
 export class ZipCodeSelectorComponent implements OnInit {
-  weathers : any[] = [];
-  zipcodeCandidate : number | '' = 0;
+  private tracking : {[key:string]: ''} = {};
+
+  weathers : {[key:string]: WeatherInfomation} = {};
+  zipcodeCandidate : string = '';
   constructor(
     private zipCodesService: ZipCodesService, 
     private weatherService : WeatherService) 
-  {     
-  }
+  {}
 
   ngOnInit(): void {
     let zipcodes = this.zipCodesService.GetZipcodes();
@@ -26,12 +27,12 @@ export class ZipCodeSelectorComponent implements OnInit {
 
   AddZipcodeCommand()
   {
-    if (this.zipcodeCandidate != '' && !this.weathers[this.zipcodeCandidate]){
+    if (this.zipcodeCandidate != ''){
       this.zipCodesService.AddZipcode(this.zipcodeCandidate);
     }
   }  
   
-  RemoveZipcodeCommand(zipcode: number)
+  RemoveZipcodeCommand(zipcode: string)
   {
     if (this.weathers[zipcode]){
       this.zipCodesService.AddZipcode(zipcode);
@@ -40,7 +41,7 @@ export class ZipCodeSelectorComponent implements OnInit {
 
   onZipCodesChanged(evt : ZipcodeChangeEvent)
   {
-    if (evt.action == 'Added' && !this.weathers[evt.zipcode])
+    if (evt.action == 'Added')
     {      
       this.LoadWeatherForZipCode(evt.zipcode);
     }
@@ -50,9 +51,13 @@ export class ZipCodeSelectorComponent implements OnInit {
     }
   }
 
-  private LoadWeatherForZipCode(zip : number){
-    this.weatherService.GetWeatherByZipcode(zip)?.subscribe((weatherInfo) => {
-      this.weathers[zip] = weatherInfo;
-    })
+  private LoadWeatherForZipCode(zip : string){
+    if (typeof(this.tracking[zip]) == "undefined")
+    {
+      this.tracking[zip] = '';
+      this.weatherService.GetWeatherByZipcode(zip)?.subscribe((weatherInfo) => {
+        this.weathers[zip] = weatherInfo;
+      });
+    }
   }
 }

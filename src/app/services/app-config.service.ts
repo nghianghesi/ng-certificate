@@ -9,8 +9,6 @@ export class AppConfigService {
     BaseEndpoint : 'http://api.openweathermap.org/data/2.5/',
     IconBasePath : 'https://www.angulartraining.com/images/weather/ '
   }
-
-  
   
   constructor() { }
 }

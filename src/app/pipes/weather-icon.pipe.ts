@@ -8,7 +8,7 @@ export class WeatherIconPipe implements PipeTransform {
   constructor(private appConfig : AppConfigService)
   {
   }
-  transform(value: any, ...args: unknown[]): string {
+  transform(value: unknown, ...args: unknown[]): string {
     return `${this.appConfig.WeatherApi.IconBasePath}${value}.png`;
   }
 }

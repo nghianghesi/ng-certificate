@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConfigService } from './app-config.service';
-import { take } from 'rxjs/operators';  
+import { take, map } from 'rxjs/operators';  
 
 @Injectable({
   providedIn: 'root'
@@ -12,22 +12,69 @@ export class WeatherService {
     this.config = this.appConfigService.WeatherApi;
   }
 
-  public GetWeatherByZipcode(zipcode: number) {
-    if (zipcode > 0)
+  public GetWeatherByZipcode(zipcode: string) {
+    if (zipcode > '')
     {
-      let url : string = `${this.config.Endpoint}/weather?zip=${zipcode}&appid=${this.config.ApiKey}`;
-      return this.http.get(url);
+      let url : string = `${this.config.BaseEndpoint}/weather`;
+      return this.http.get<WeatherInfomation>(url, {params:{zip:zipcode.toString(), appid:this.config.ApiKey}});
     }
     
     return null;
   }  
   
-  public Get5DaysWeatherByZipcode(zipcode: number) {
-    if (zipcode > 0)
+  public Get5DaysWeatherByZipcode(zipcode: string) {
+    if (zipcode > '')
     {
-      let url : string = `${this.config.Endpoint}/forecast/daily?zip=${zipcode}&appid=${this.config.ApiKey}`;
-      return this.http.get(url).pipe(take(5));
+      let url : string = `${this.config.BaseEndpoint}/forecast/daily`;
+      return this.http.get<WeatherInfomation>(url, {params:{zip:zipcode.toString(), appid:this.config.ApiKey}})
+            .pipe(take(5), map((x)=>{x.zipcode = zipcode; return x;}));
     }
+
     return null;
   }
 }
+
+export interface WeatherInfomation
+{
+  "coord"?: {
+    "lon": number,
+    "lat": number
+  },
+  "weather": {
+      "id": number,
+      "main": string,
+      "description": string,
+      "icon": string
+    }[],
+  "base"?: string,
+  "main"?: {
+    "temp": number,
+    "feels_like": number,
+    "temp_min": number,
+    "temp_max": number,
+    "pressure": number,
+    "humidity": number
+  },
+  "visibility"?: number,
+  "wind"?: {
+    "speed": number,
+    "deg": number
+  },
+  "clouds"?: {
+    "all": number
+  },
+  "dt"?: number,
+  "sys"?: {
+    "type": number,
+    "id": number,
+    "message": number,
+    "country": string,
+    "sunrise": number,
+    "sunset": number
+  },
+  "timezone"?: number,
+  "id"?: number,
+  "name"?: string,
+  "zipcode"?:string,
+  "cod"?: number
+  }    
