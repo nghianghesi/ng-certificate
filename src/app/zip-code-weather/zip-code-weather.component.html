@@ -1,16 +1,18 @@
 <div class="container-fluid" *ngIf="forecast">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">5-day forecast for {{forecast.city.name}}</h3>  
+        <h3 class="panel-title">5-days forecast for {{forecast.city.name}}</h3>  
       </div>
       <ul class="list-group">
-        <li class="list-group-item" *ngFor="let f of forecast?.list">
-          {{f.dt}}:
+        <ng-container  *ngFor="let f of forecast.list; let idx=index">
+        <li class="list-group-item"  *ngIf="idx < 5">
+          {{f.dt | amFromUnix | amDateFormat : 'LL'}}:
           {{f.weather[0].main}}
           - Min: {{f.temp.min | temperature : 'F'}}
           - Max: {{f.temp.max | temperature : 'F'}}
-          <img class="icon" src="{{f.weather[0].main | weatherIcon}}">
+          <img style="width: 15px;" class="icon" src="{{f.weather[0].main | weatherIcon}}">
         </li>
+      </ng-container>
       </ul>
     </div>
     <button class="btn btn-success" tabindex="0" id="mainPageBtn" (click)="router.navigate(['forecast'])">&lt; Back to main page</button>

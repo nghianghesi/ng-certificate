@@ -52,8 +52,8 @@ export class ZipCodeSelectorComponent implements OnInit {
     }
   }
 
-  private LoadWeatherForZipCode(zip : string){
-    if (typeof(this.tracking[zip]) == "undefined")
+  private LoadWeatherForZipCode(zip : string, forced = false){
+    if (typeof(this.tracking[zip]) == "undefined" || forced)
     {
       this.tracking[zip] = '';
       this.weatherService.GetWeatherByZipcode(zip)?.subscribe((weatherInfo) => {

@@ -5,9 +5,9 @@
       <br>
       <button class="btn btn-primary" (click)="AddZipcodeCommand()">Add location</button>
     </div>
-    <div *ngFor="let item of weathers | keyvalue">
-        <div class="well flex">
-            <div>
+    <div class="w3-row w3-center w3-small" *ngFor="let item of weathers | keyvalue | sortWeatherZipcodes">
+        <div class="w3-col l3 m6 s12">
+            <div class="float-left">
               <h3>{{item.value.name}}</h3>
               <h4>Current conditions: {{item.value.weather[0].main}}</h4>
               <h4>Temperatures today:</h4>
@@ -17,10 +17,10 @@
                 - Min {{item.value.main?.temp_min | temperature : 'F'}}
               </p>
               <p>
-                <a [routerLink]="['forecast', item.key]">Show 5-day forecast for {{item.value.name}}</a>
+                <a [routerLink]="['/forecast', item.key]">Show 5-day forecast for {{item.value.name}}</a>
               </p>
             </div>
-            <div>
+            <div class="float-left">
               <span class="close" (click)="RemoveZipcodeCommand(item.key)">×</span>
               <img [src]="item.value.weather[0].main | weatherIcon">
             </div>

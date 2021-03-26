@@ -4,6 +4,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { StorageServiceModule } from 'ngx-webstorage-service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MomentModule } from 'ngx-moment';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,11 +14,10 @@ import { ZipCodeWeatherComponent } from './zip-code-weather/zip-code-weather.com
 import { WeatherIconPipe } from './pipes/weather-icon.pipe';
 import { TemperaturePipe } from './pipes/temperature.pipe';
 
-
 import { WeatherService } from './services/weather.service';
 import { ZipCodesService } from './services/zip-codes.service';
 import { AppConfigService } from './services/app-config.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SortWeatherZipcodesPipe } from './pipes/sort-weather-zipcodes.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ZipCodeSelectorComponent,
     ZipCodeWeatherComponent,
     WeatherIconPipe,
-    TemperaturePipe
+    TemperaturePipe,
+    SortWeatherZipcodesPipe
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     StorageServiceModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    MomentModule
   ],
   providers: [AppConfigService, WeatherService, ZipCodesService],
   bootstrap: [AppComponent]
