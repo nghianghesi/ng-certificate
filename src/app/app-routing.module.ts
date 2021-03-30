@@ -1,16 +1,13 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ZipCodeSelectorComponent } from './zip-code-selector/zip-code-selector.component';
-import { ZipCodeWeatherComponent } from './zip-code-weather/zip-code-weather.component';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: 'forecast/:zipcode', component: ZipCodeWeatherComponent },
-  { path: 'forecast', component: ZipCodeSelectorComponent },
-  { path: '', component: ZipCodeSelectorComponent }
+  { path: 'forecast', loadChildren: () => import('./lazy/lazy.module').then(m => m.LazyModule) },
+  { path: '', redirectTo: 'forecast', pathMatch: 'full'}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
